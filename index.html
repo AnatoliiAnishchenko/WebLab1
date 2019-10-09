@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Lab 1</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Анищенко Анатолий Алексеевич</h1>
+            <h2>Группа: P3212<br>
+                Вариант: 212000</h2>
+        </div>
+
+        <figure>
+            <img src="Lab1.png" alt="picture for lab 1">
+            <figcaption>
+                Вариант лабораторной
+            </figcaption>
+        </figure>
+
+        <div class="input-field">
+            <form method="get" action="handler.php">
+                <p>Изменение X:</p>
+                <label>
+                    <input type="radio" name="X" value="-4">
+                    -4
+                </label>
+                <label>
+                    <input type="radio" name="X" value="-3">
+                    -3
+                </label>
+                <label>
+                    <input type="radio" name="X" value="-2">
+                    -2
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="X" value="-1">
+                    -1
+                </label>
+                <label>
+                    <input type="radio" name="X" value="0" checked>
+                    0
+                </label>
+                <label>
+                    <input type="radio" name="X" value="1">
+                    1
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="X" value="2">
+                    2
+                </label>
+                <label>
+                    <input type="radio" name="X" value="3">
+                    3
+                </label>
+                <label>
+                    <input type="radio" name="X" value="4">
+                    4
+                </label>
+                <br>
+
+                <p>Изменеие Y:</p>
+                <label>
+                    <input type="text" name="Y" class="y-field" value="0" oninput="validateForm()">
+                </label>
+                <br>
+
+                <p>Изменение R:</p>
+                <input type="button" name="R-button" class="r-button" value="1">
+                <input type="button" name="R-button" class="r-button" value="2">
+                <input type="button" name="R-button" class="r-button" value="3">
+                <br>
+                <input type="button" name="R-button" class="r-button" value="4">
+                <input type="button" name="R-button" class="r-button" value="5">
+                <input type="button" name="R-button" class="r-button" value="6">
+                <br>
+
+                <input type="submit" class="submit-button">
+
+                <input type="hidden" name="R" class="r-field" value="1">
+            </form>
+        </div>
+
+        <div class="simple-text">
+            <h2>Задание</h2>
+            <p>
+                Разработать PHP-скрипт, определяющий попадание точки на координатной плоскости в заданную область, и создать
+                HTML-страницу, которая формирует данные для отправки их на обработку этому скрипту. <br><br>
+                Параметр R и координаты точки должны передаваться скрипту посредством HTTP-запроса. Скрипт должен выполнять
+                валидацию данных и возвращать HTML-страницу с таблицей, содержащей полученные параметры и результат вычислений -
+                факт попадания или непопадания точки в область.<br><br>
+                Кроме того, ответ должен содержать данные о текущем времени и времени работы скрипта.<br><br>
+                <b>Разработанная HTML-страница должна удовлетворять следующим требованиям:</b>
+                <ul>
+                    <li>Для расположения текстовых и графических элементов необходимо использовать блочную верстку.</li>
+                    <li>Данные формы должны передаваться на обработку посредством GET-запроса.</li>
+                    <li>Таблицы стилей должны располагаться в самом веб-документе.</li>
+                    <li>При работе с CSS должно быть продемонстрировано использование селекторов элементов, селекторов классов,
+                        селекторов потомств, селекторов атрибутов а также такие свойства стилей CSS, как наследование и
+                        каскадирование.
+                    </li>
+                    <li>HTML-страница должна иметь "шапку", содержащую ФИО студента, номер группы и новер варианта. При оформлении
+                        шапки необходимо явным образом задать шрифт (<i>fantasy</i>), его цвет и размер в каскадной таблице стилей.
+                    </li>
+                    <li>Отступы элементов ввода должны задаваться в процентах.</li>
+                    <li>Страница должна содержать сценарий на языке JavaScript, осуществляющий валидацию значений, вводимых
+                        пользователем в поля формы. Любые некорректные значения (например, буквы в координатах точки или
+                        отрицательный радиус) должны блокироваться.
+                    </li>
+                </ul>
+            </p>
+        </div>
+    </body>
+    <script type="text/javascript">
+        function formValidation(myObject, lowerBound, upperBound) {
+            let str = myObject.val();
+            let minusVal = lowerBound < 0;
+            while ((isNaN(str) || (str > upperBound) || (str < lowerBound))
+            && (str.length > 0) && (!minusVal || (str !== "-"))) {
+                myObject.val(str.slice(0, str.length - 1));
+                str = myObject.val();
+            }
+        }
+
+        function validateForm() {
+            formValidation($(".y-field"), -3, 5);
+        }
+
+        $(".r-button").each(function () {
+            this.addEventListener('click', function () {
+                $(".active-r-button").each(function() {
+                    if ($(this).hasClass("active-r-button")) {
+                        $(this).toggleClass("active-r-button");
+                        $(this).toggleClass("r-button");
+                    }
+                });
+                $(this).toggleClass("active-r-button");
+                $(".r-field").val(this.value);
+            })
+        });
+
+        window.onload = function () {
+            $(".r-button").first().toggleClass("active-r-button")
+        }
+    </script>
+</html>
+
+<style>
+    .header {
+        position: fixed;
+        padding-right: 55px;
+        padding-left: 55px;
+        width: 100vw;
+        height: 84px;
+        left: 0;
+        top: 0;
+        background: #1946BA;
+        font-family: "Times New Roman", fantasy;
+        color: #FFFFFF;
+    }
+
+    body {
+        padding-top: 84px;
+        width: 70%;
+        font-family: "Times New Roman", sans-serif;
+        background: #FFFFFF;
+        margin: auto;
+        font-size: 18px;
+    }
+
+    .y-field,
+    .active-r-button,
+    .r-button,
+    .submit-button {
+        border-radius: 4px;
+    }
+
+    .submit-button {
+        margin-top: 25px;
+        background: #1946BA;
+        color: #FFFFFF;
+    }
+
+    .active-r-button {
+        background: #1946BA;
+        color: #FFFFFF;
+    }
+
+    .input-field input {
+        font-size: 15px;
+        margin: 10px;
+    }
+
+    .input-field p {
+        font-size: 20px;
+    }
+
+    input[type="radio"]:after {
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #d1d3d1;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid white;
+    }
+
+    input[type='radio']:checked:after {
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #1946BA;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid white;
+    }
+
+    .input-field>p {
+        margin: 10px;
+    }
+
+    .header h1 {
+        float: left;
+        margin-top: 17px;
+    }
+
+    figure,
+    .header h2 {
+        float: right;
+        margin-top: 7px;
+        padding-right: 110px;
+    }
+
+    img {
+        border: 3px solid #1946BA;
+        border-radius: 4px;
+    }
+</style>
