@@ -36,7 +36,7 @@ if ($_POST['submit-button']) {
         $R = '<b>Wrong R value!!!</b>';
     }
 
-    if ($IS_CORRECT && ($X >= 0 && $Y >= 0 && $X <= $R / 2 && $Y <= $R ||
+    if ($IS_CORRECT && ($X >= 0 && $Y >= 0 && $X <= $R && $Y <= $R / 2 ||
             $X >= 0 && $Y <= 0 && $X * $X + $Y * $Y <= $R * $R / 4 ||
             $X < 0 && $Y < 0 && $X * 2 + $Y >= -$R)) {
         $RESULT = 'YES';
