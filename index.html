@@ -65,7 +65,7 @@
 
                 <p>Изменеие Y:</p>
                 <label>
-                    <input type="text" name="Y" class="y-field" value="0" oninput="validateForm()">
+                    <input type="text" name="Y" class="y-field" value="0" oninput="validateForm()" maxlength="6">
                 </label>
                 <br>
 
@@ -119,7 +119,7 @@
         function formValidation(myObject, lowerBound, upperBound) {
             let str = myObject.val();
             let minusVal = lowerBound < 0;
-            while ((isNaN(str) || (str > upperBound) || (str < lowerBound))
+            while ((isNaN(str) || (str >= upperBound) || (str <= lowerBound))
             && (str.length > 0) && (!minusVal || (str !== "-"))) {
                 myObject.val(str.slice(0, str.length - 1));
                 str = myObject.val();

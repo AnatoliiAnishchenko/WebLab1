@@ -22,7 +22,7 @@ if ($_POST['submit-button']) {
         $X = '<b>Wrong X value!!!</b>';
     }
 
-    if ($_GET['Y'] >= -3 && $_GET['Y'] <= 5) {
+    if ($_GET['Y'] > -3 && $_GET['Y'] < 5) {
         $Y = (float) $_GET['Y'];
     } else {
         $IS_CORRECT = FALSE;
